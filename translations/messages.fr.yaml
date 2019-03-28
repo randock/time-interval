@@ -1,0 +1,5 @@
+timeInterval.seconds: "%count% seconde|%count% secondes"
+timeInterval.minutes: "%count% minute|%count% minutes"
+timeInterval.hours: "%count% heure|%count% heures"
+timeInterval.days: "%count% jour|%count% jours"
+timeInterval.and: et
