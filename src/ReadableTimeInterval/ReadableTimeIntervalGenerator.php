@@ -61,9 +61,6 @@ class ReadableTimeIntervalGenerator
             $textComponents[] = $this->translator->transChoice('timeInterval.seconds', $seconds, ['%count%' => $seconds]);
         }
 
-        $output = '';
-
-        $i = 0;
         if (1 === \count($textComponents)) {
             return $textComponents[0];
         }
@@ -89,10 +86,10 @@ class ReadableTimeIntervalGenerator
      */
     public function setLocale(string $locale): self
     {
-        $translationFile = \sprintf('/app/translations/messages.%s.yaml', $locale);
+        $translationFile = \sprintf('%s/../../translations/messages.%s.yaml', dirname(__FILE__),$locale);
         $resourceAdded = $this->addYamlResource($translationFile, $locale);
         if (!$resourceAdded) {
-            $translationFile = \sprintf('/app/translations/messages.%s.yaml', \Locale::parseLocale($locale)['language']);
+            $translationFile = \sprintf('%s/../../translations/messages.%s.yaml',dirname(__FILE__), \Locale::parseLocale($locale)['language']);
             $resourceAdded = $this->addYamlResource($translationFile, $locale);
             if (!$resourceAdded) {
                 throw new LocaleNotSupportedException($locale);
