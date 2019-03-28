@@ -22,7 +22,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "symfony/translation": "^4.1",
+    "symfony/translation": "^3.3",
     "symfony/yaml": "^3.3"
   },
   "require-dev": {

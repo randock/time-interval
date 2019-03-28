@@ -36,11 +36,11 @@ class ReadableTimeIntervalTest extends TestCase
         $this->translator->setLocale('fr_FR');
         $expectedOutput = \sprintf(
             '%s, %s, %s %s %s',
-            $this->translator->trans('timeInterval.days', ['%count%' => 2]),
-            $this->translator->trans('timeInterval.hours', ['%count%' => 7]),
-            $this->translator->trans('timeInterval.minutes', ['%count%' => 33]),
+            $this->translator->transChoice('timeInterval.days', 2, ['%count%' => 2]),
+            $this->translator->transChoice('timeInterval.hours', 7, ['%count%' => 7]),
+            $this->translator->transChoice('timeInterval.minutes', 33, ['%count%' => 33]),
             $this->translator->trans('timeInterval.and'),
-            $this->translator->trans('timeInterval.seconds', ['%count%' => 20])
+            $this->translator->transChoice('timeInterval.seconds', 20, ['%count%' => 20])
             );
         $this->assertSame($expectedOutput, $generatedTranslation);
     }
