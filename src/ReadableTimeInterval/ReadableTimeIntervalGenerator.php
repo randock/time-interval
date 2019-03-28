@@ -86,10 +86,10 @@ class ReadableTimeIntervalGenerator
      */
     public function setLocale(string $locale): self
     {
-        $translationFile = \sprintf('%s/../../translations/messages.%s.yaml', dirname(__FILE__),$locale);
+        $translationFile = \sprintf('%s/../../translations/messages.%s.yaml', __DIR__, $locale);
         $resourceAdded = $this->addYamlResource($translationFile, $locale);
         if (!$resourceAdded) {
-            $translationFile = \sprintf('%s/../../translations/messages.%s.yaml',dirname(__FILE__), \Locale::parseLocale($locale)['language']);
+            $translationFile = \sprintf('%s/../../translations/messages.%s.yaml', __DIR__, \Locale::parseLocale($locale)['language']);
             $resourceAdded = $this->addYamlResource($translationFile, $locale);
             if (!$resourceAdded) {
                 throw new LocaleNotSupportedException($locale);
