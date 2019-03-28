@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Tests\Randock\TimeInterval\ReadableTimeInterval;
 
 use PHPUnit\Framework\TestCase;
-use Randock\TimeInterval\ReadableTimeInterval\Exception\LocaleNotSupportedException;
-use Randock\TimeInterval\ReadableTimeInterval\ReadableTimeIntervalGenerator;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Randock\TimeInterval\ReadableTimeInterval\ReadableTimeIntervalGenerator;
+use Randock\TimeInterval\ReadableTimeInterval\Exception\LocaleNotSupportedException;
 
 class ReadableTimeIntervalTest extends TestCase
 {
@@ -27,14 +28,13 @@ class ReadableTimeIntervalTest extends TestCase
         $this->translator->addResource('yaml', '/app/translations/messages.de.yaml', 'es_ES');
     }
 
-
     public function testGetReadableTimeText()
     {
         $readableTimeIntervalGenerator = new ReadableTimeIntervalGenerator('fr_BE');
         $generatedTranslation = $readableTimeIntervalGenerator->getReadableTimeText(200000);
 
         $this->translator->setLocale('fr_FR');
-        $expectedOutput = sprintf(
+        $expectedOutput = \sprintf(
             '%s, %s, %s %s %s',
             $this->translator->trans('timeInterval.days', ['%count%' => 2]),
             $this->translator->trans('timeInterval.hours', ['%count%' => 7]),
@@ -57,15 +57,15 @@ class ReadableTimeIntervalTest extends TestCase
         $generatedTranslation = $readableTimeIntervalGenerator->getReadableTimeText(60);
 
         $this->translator->setLocale('en_EN');
-        $this->assertSame("1 minute", $generatedTranslation);
+        $this->assertSame('1 minute', $generatedTranslation);
     }
-    
+
     public function testPluralEnglish()
     {
         $readableTimeIntervalGenerator = new ReadableTimeIntervalGenerator('en_EN');
         $generatedTranslation = $readableTimeIntervalGenerator->getReadableTimeText(120);
 
         $this->translator->setLocale('en_EN');
-        $this->assertSame("2 minutes", $generatedTranslation);
+        $this->assertSame('2 minutes', $generatedTranslation);
     }
 }

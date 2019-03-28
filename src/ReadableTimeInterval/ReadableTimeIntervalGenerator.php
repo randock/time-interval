@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Randock\TimeInterval\ReadableTimeInterval;
 
-use Randock\TimeInterval\ReadableTimeInterval\Exception\LocaleNotSupportedException;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
+use Randock\TimeInterval\ReadableTimeInterval\Exception\LocaleNotSupportedException;
 
 class ReadableTimeIntervalGenerator
 {
@@ -43,7 +43,7 @@ class ReadableTimeIntervalGenerator
         $hours = $remainder % 24;
         $days = \intdiv($remainder, 24);
 
-        $textComponents=[];
+        $textComponents = [];
 
         if (0 !== $seconds) {
             $textComponents[] = $this->translator->trans('timeInterval.seconds', ['%count%' => $seconds]);
@@ -62,48 +62,51 @@ class ReadableTimeIntervalGenerator
         }
         $output = '';
 
-        $i= 0;
-        $len = count($textComponents);
+        $i = 0;
+        $len = \count($textComponents);
         foreach ($textComponents as $textComponent) {
-            if ($i === 0) {
+            if (0 === $i) {
                 if ($len > 1) {
                     $output =
-                        sprintf(
+                        \sprintf(
                             ' %s %s',
                             $this->translator->trans('timeInterval.and'),
                             $textComponent
                         );
                 } else {
-                    $output = sprintf('%s', $textComponent);
+                    $output = \sprintf('%s', $textComponent);
                 }
             } elseif ($i === $len - 1) {
-                $output = sprintf('%s%s', $textComponent, $output);
+                $output = \sprintf('%s%s', $textComponent, $output);
             } else {
-                $output = sprintf(', %s%s', $textComponent, $output);
+                $output = \sprintf(', %s%s', $textComponent, $output);
             }
-            $i++;
+            ++$i;
         }
+
         return $output;
     }
 
     /**
      * @param string $locale
      *
-     * @return ReadableTimeIntervalGenerator
      * @throws LocaleNotSupportedException
+     *
+     * @return ReadableTimeIntervalGenerator
      */
     public function setLocale(string $locale): self
     {
-        $translationFile = sprintf('/app/translations/messages.%s.yaml', $locale);
+        $translationFile = \sprintf('/app/translations/messages.%s.yaml', $locale);
         $resourceAdded = $this->addYamlResource($translationFile, $locale);
         if (!$resourceAdded) {
-            $translationFile = sprintf('/app/translations/messages.%s.yaml', substr($locale, 0, 2));
+            $translationFile = \sprintf('/app/translations/messages.%s.yaml', \substr($locale, 0, 2));
             $resourceAdded = $this->addYamlResource($translationFile, $locale);
             if (!$resourceAdded) {
                 throw new LocaleNotSupportedException($locale);
             }
         }
         $this->translator->setLocale($locale);
+
         return $this;
     }
 
@@ -115,10 +118,12 @@ class ReadableTimeIntervalGenerator
      */
     private function addYamlResource(string $filePath, string $locale)
     {
-        if (file_exists($filePath)) {
+        if (\file_exists($filePath)) {
             $this->translator->addResource('yaml', $filePath, $locale);
+
             return true;
         }
+
         return false;
     }
 }

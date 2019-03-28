@@ -13,6 +13,6 @@ class LocaleNotSupportedException extends \Exception
      */
     public function __construct(string $locale)
     {
-        parent::__construct(sprintf('Locale not supported: %s', $locale));
+        parent::__construct(\sprintf('Locale not supported: %s', $locale));
     }
 }
