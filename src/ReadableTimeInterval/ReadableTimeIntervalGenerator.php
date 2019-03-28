@@ -45,44 +45,37 @@ class ReadableTimeIntervalGenerator
 
         $textComponents = [];
 
-        if (0 !== $seconds) {
-            $textComponents[] = $this->translator->trans('timeInterval.seconds', ['%count%' => $seconds]);
-        }
-
-        if (0 !== $minutes) {
-            $textComponents[] = $this->translator->trans('timeInterval.minutes', ['%count%' => $minutes]);
+        if (0 !== $days) {
+            $textComponents[] = $this->translator->trans('timeInterval.days', ['%count%' => $days]);
         }
 
         if (0 !== $hours) {
             $textComponents[] = $this->translator->trans('timeInterval.hours', ['%count%' => $hours]);
         }
 
-        if (0 !== $days) {
-            $textComponents[] = $this->translator->trans('timeInterval.days', ['%count%' => $days]);
+        if (0 !== $minutes) {
+            $textComponents[] = $this->translator->trans('timeInterval.minutes', ['%count%' => $minutes]);
         }
+
+        if (0 !== $seconds) {
+            $textComponents[] = $this->translator->trans('timeInterval.seconds', ['%count%' => $seconds]);
+        }
+
         $output = '';
 
         $i = 0;
-        $len = \count($textComponents);
-        foreach ($textComponents as $textComponent) {
-            if (0 === $i) {
-                if ($len > 1) {
-                    $output =
-                        \sprintf(
-                            ' %s %s',
-                            $this->translator->trans('timeInterval.and'),
-                            $textComponent
-                        );
-                } else {
-                    $output = \sprintf('%s', $textComponent);
-                }
-            } elseif ($i === $len - 1) {
-                $output = \sprintf('%s%s', $textComponent, $output);
-            } else {
-                $output = \sprintf(', %s%s', $textComponent, $output);
-            }
-            ++$i;
+        if (1 === \count($textComponents)) {
+            return $textComponents[0];
         }
+
+        $lastComponent = \array_pop($textComponents);
+        $output = \implode(', ', $textComponents);
+        $output = \sprintf(
+            '%s %s %s',
+            $output,
+            $this->translator->trans('timeInterval.and'),
+            $lastComponent
+        );
 
         return $output;
     }
@@ -99,7 +92,7 @@ class ReadableTimeIntervalGenerator
         $translationFile = \sprintf('/app/translations/messages.%s.yaml', $locale);
         $resourceAdded = $this->addYamlResource($translationFile, $locale);
         if (!$resourceAdded) {
-            $translationFile = \sprintf('/app/translations/messages.%s.yaml', \substr($locale, 0, 2));
+            $translationFile = \sprintf('/app/translations/messages.%s.yaml', \Locale::parseLocale($locale)['language']);
             $resourceAdded = $this->addYamlResource($translationFile, $locale);
             if (!$resourceAdded) {
                 throw new LocaleNotSupportedException($locale);
