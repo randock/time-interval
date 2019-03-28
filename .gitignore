@@ -1,0 +1,6 @@
+.idea
+vendor
+docker-compose.yml
+phpunit.xml
+build
+.php_cs.cache

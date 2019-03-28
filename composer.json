@@ -1,0 +1,31 @@
+{
+  "name": "randock/time-interval",
+  "description": "Randock TimeInterval",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Randock\\TimeInterval\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\Randock\\TimeInterval\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true,
+    "platform": {
+      "php": "7.1.17"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "symfony/translation": "^4.1",
+    "symfony/yaml": "^4.2"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.5"
+  }
+}
