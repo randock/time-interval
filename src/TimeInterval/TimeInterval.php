@@ -90,6 +90,31 @@ class TimeInterval
     }
 
     /**
+     * @return int
+     */
+    public function getInDays(): int
+    {
+        return (int) \ceil(
+            $this->getInSeconds() / 86400
+        );
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return \DateInterval
+     */
+    public function getDateInterval(): \DateInterval
+    {
+        return new \DateInterval(
+            \sprintf(
+                'PT%dS',
+                $this->getInSeconds()
+            )
+        );
+    }
+
+    /**
      * @param int $milliseconds
      *
      * @return $this
