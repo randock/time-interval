@@ -84,9 +84,42 @@ class TimeInterval
         return $this->milliseconds;
     }
 
-    public function getInSeconds()
+    /**
+     * @return int
+     */
+    public function getInSeconds(): int
     {
-        return (int) \ceil($this->milliseconds / 1000);
+        return (int) \floor($this->milliseconds / 1000);
+    }
+
+    /**
+     * @return int
+     */
+    public function getInDays(): int
+    {
+        $days = $this->getInSeconds() / 86400;
+        if( $days < 1 ){
+            return 0;
+        }
+
+        return (int) \floor(
+            $this->getInSeconds() / 86400
+        );
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return \DateInterval
+     */
+    public function getDateInterval(): \DateInterval
+    {
+        return new \DateInterval(
+            \sprintf(
+                'PT%dS',
+                $this->getInSeconds()
+            )
+        );
     }
 
     /**

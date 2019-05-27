@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Randock\TimeInterval\ReadableTimeInterval;
 
 use PHPUnit\Framework\TestCase;
+use Randock\TimeInterval\TimeInterval\TimeInterval;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Randock\TimeInterval\ReadableTimeInterval\ReadableTimeIntervalGenerator;
@@ -67,5 +68,25 @@ class ReadableTimeIntervalTest extends TestCase
 
         $this->translator->setLocale('en_EN');
         $this->assertSame('2 minutes', $generatedTranslation);
+    }
+
+    public function testFromTimeInterval()
+    {
+        $timeInterval = TimeInterval::newFromSeconds(5);
+        $readableTimeIntervalGenerator = new ReadableTimeIntervalGenerator('en_EN');
+        $generatedTranslation = $readableTimeIntervalGenerator->getReadableTimeIntervalText($timeInterval);
+
+        $this->translator->setLocale('en_EN');
+        $this->assertSame('5 seconds', $generatedTranslation);
+    }
+
+    public function testFromZeroSeconds()
+    {
+        $timeInterval = TimeInterval::newFromSeconds(0);
+        $readableTimeIntervalGenerator = new ReadableTimeIntervalGenerator('en_EN');
+        $generatedTranslation = $readableTimeIntervalGenerator->getReadableTimeIntervalText($timeInterval);
+
+        $this->translator->setLocale('en_EN');
+        $this->assertSame('0 seconds', $generatedTranslation);
     }
 }
