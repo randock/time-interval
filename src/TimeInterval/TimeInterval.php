@@ -86,20 +86,20 @@ class TimeInterval
 
     public function getInSeconds()
     {
-        return (int) \ceil($this->milliseconds / 1000);
+        return (int) \floor($this->milliseconds / 1000);
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getInDays(): int
+    public function getInDays(): float
     {
         $days = $this->getInSeconds() / 86400;
         if( $days < 1 ){
             return 0;
         }
 
-        return (int) \ceil(
+        return (int) \floor(
             $this->getInSeconds() / 86400
         );
     }
