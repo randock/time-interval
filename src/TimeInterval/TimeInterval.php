@@ -94,6 +94,11 @@ class TimeInterval
      */
     public function getInDays(): int
     {
+        $days = $this->getInSeconds() / 86400;
+        if( $days < 1 ){
+            return 0;
+        }
+
         return (int) \ceil(
             $this->getInSeconds() / 86400
         );

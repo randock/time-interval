@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Randock\TimeInterval\ReadableTimeInterval;
 
+use Randock\TimeInterval\TimeInterval\TimeInterval;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 use Randock\TimeInterval\ReadableTimeInterval\Exception\LocaleNotSupportedException;
@@ -34,7 +35,7 @@ class ReadableTimeIntervalGenerator
      *
      * @return string
      */
-    public function getReadableTimeText(int $secondsToTransform)
+    public function getReadableTimeText(int $secondsToTransform): string
     {
         $seconds = $secondsToTransform % 60;
         $remainder = \intdiv($secondsToTransform, 60);
@@ -61,6 +62,10 @@ class ReadableTimeIntervalGenerator
             $textComponents[] = $this->translator->transChoice('timeInterval.seconds', $seconds, ['%count%' => $seconds]);
         }
 
+        if( true === empty($textComponents) ){
+            return $textComponents[] = $this->translator->transChoice('timeInterval.seconds', $seconds, ['%count%' => $seconds]);
+        }
+
         if (1 === \count($textComponents)) {
             return $textComponents[0];
         }
@@ -75,6 +80,18 @@ class ReadableTimeIntervalGenerator
         );
 
         return $output;
+    }
+
+    /**
+     * @param TimeInterval $timeInterval
+     *
+     * @return string
+     */
+    public function getReadableTimeIntervalText(TimeInterval $timeInterval): string
+    {
+        return $this->getReadableTimeText(
+            $timeInterval->getInSeconds()
+        );
     }
 
     /**
@@ -106,7 +123,7 @@ class ReadableTimeIntervalGenerator
      *
      * @return bool
      */
-    private function addYamlResource(string $filePath, string $locale)
+    private function addYamlResource(string $filePath, string $locale): bool
     {
         if (\file_exists($filePath)) {
             $this->translator->addResource('yaml', $filePath, $locale);
