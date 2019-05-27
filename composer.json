@@ -22,6 +22,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
+    "ext-intl": "*",
     "symfony/translation": "^3.3|^4.0",
     "symfony/yaml": "^3.3|^4.0"
   },
