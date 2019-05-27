@@ -47,23 +47,23 @@ class ReadableTimeIntervalGenerator
         $textComponents = [];
 
         if (0 !== $days) {
-            $textComponents[] = $this->translator->transChoice('timeInterval.days', $days, ['%count%' => $days]);
+            $textComponents[] = $this->translator->trans('timeInterval.days', ['%count%' => $days]);
         }
 
         if (0 !== $hours) {
-            $textComponents[] = $this->translator->transChoice('timeInterval.hours', $hours, ['%count%' => $hours]);
+            $textComponents[] = $this->translator->trans('timeInterval.hours', ['%count%' => $hours]);
         }
 
         if (0 !== $minutes) {
-            $textComponents[] = $this->translator->transChoice('timeInterval.minutes', $minutes, ['%count%' => $minutes]);
+            $textComponents[] = $this->translator->trans('timeInterval.minutes', ['%count%' => $minutes]);
         }
 
         if (0 !== $seconds) {
-            $textComponents[] = $this->translator->transChoice('timeInterval.seconds', $seconds, ['%count%' => $seconds]);
+            $textComponents[] = $this->translator->trans('timeInterval.seconds', ['%count%' => $seconds]);
         }
 
         if( true === empty($textComponents) ){
-            return $textComponents[] = $this->translator->transChoice('timeInterval.seconds', $seconds, ['%count%' => $seconds]);
+            return $textComponents[] = $this->translator->trans('timeInterval.seconds', ['%count%' => $seconds]);
         }
 
         if (1 === \count($textComponents)) {
