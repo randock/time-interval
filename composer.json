@@ -22,8 +22,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "symfony/translation": "^3.3",
-    "symfony/yaml": "^3.3"
+    "symfony/translation": "^3.3|^4.0",
+    "symfony/yaml": "^3.3|^4.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5"
